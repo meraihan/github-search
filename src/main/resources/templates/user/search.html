@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Github Library</title>
+    <link rel="stylesheet" th:href="@{/css/menu.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<ul class="topnav">
+    <li><a class="active" href="/">DASHBOARD</a></li>
+    <li><a href="/user/search">SEARCH GITHUB</a></li>
+    <li><a href="/">SEARCH HISTORY</a></li>
+    <li><a href="/">POPULAR SEARCH</a></li>
+    <li><a href="/logout">LOGOUT</a></li>
+</ul>
+
+<div class="content">
+
+    <h2>Search By Git User Name</h2>
+    <form th:action="@{/user/search}" th:method="POST" modelAttribute="username">
+        <input type="text" name="username" id="cls" placeholder="Search By Github User Name"/>
+        <input type="submit" id="btn" value="SEARCH"/>
+    </form>
+    <br><br><br>
+    <table th:if="${ gitUser!=null }" id="search-tbl">
+        <thead>
+        <tr>
+            <th>Avatar</th>
+            <th>UserName</th>
+            <th>Full Name</th>
+            <th>Followers</th>
+            <th>Following</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr  th:each="user,iterationStatus : ${gitUser}">
+            <td><img th:src="${user.avatar_url}" th:height="150px" th:width="150px"/></td>
+            <td th:text="${user.login}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.followers}"></td>
+            <td th:text="${user.following}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+<script th:src="@{/js/jquery-3.4.1.js}"></script>
+<script>
+    $(document).ready(function() {
+        var tableLength = document.getElementById("search-tbl").rows.length-1;
+        alert(tableLength);
+        if(tableLength==0){
+            alert("not found");
+            $('#search-tbl tbody').append('<tr data-no-results-found><td colspan="4"' +
+                ' style="text-align: center">User does not exist</td></tr>');
+        }
+    });
+
+</script>
+</html>

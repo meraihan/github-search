@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Github Library</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}"/>
+</head>
+<body>
+
+<h2>Welcome to the Github Library</h2>
+<form th:action="@{/login}" method="post" modelAttribute="user">
+    <div class="imgcontainer">
+        <img th:src="@{/img/git-logo.png}" alt="Avatar" class="avatar"/>
+    </div>
+    <div class="message">
+        <div th:if="${param.error}">Invalid username and password.</div>
+        <div th:if="${param.logout}">You have been logged out.</div>
+    </div>
+
+    <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" placeholder="Enter Username"value="admin" id="uname" name="username" required/>
+        </br>
+        <label for="psw"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" value="1234" id="psw" name="password" required/>
+
+        <button type="submit">Login</button>
+
+    </div>
+</form>
+
+</body>
+</html>
