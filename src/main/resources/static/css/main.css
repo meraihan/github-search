@@ -109,3 +109,7 @@ input[type="file"]{
 .reg-header{
     text-align: center;
 }
+
+#pop-search th{
+    text-align: center;
+}

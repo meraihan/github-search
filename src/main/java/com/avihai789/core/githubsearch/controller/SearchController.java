@@ -1,8 +1,10 @@
 package com.avihai789.core.githubsearch.controller;
 
 import com.avihai789.core.githubsearch.model.Search;
+import com.avihai789.core.githubsearch.model.SearchHistory;
 import com.avihai789.core.githubsearch.service.AuthenticationService;
 import com.avihai789.core.githubsearch.service.SearchService;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @Slf4j
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/github")
 public class SearchController {
 
     @Autowired
@@ -27,7 +30,7 @@ public class SearchController {
     @GetMapping("/search")
     public String searchPage(HttpSession session) {
         if(authenticationService.isLoggedIn(session)){
-            return "user/search";
+            return "search/search";
         }
         return "redirect:/";
     }
@@ -41,7 +44,28 @@ public class SearchController {
             if(gitUser.getLogin()==null){
                 model.addAttribute("errorMessage", "NoData");
             }
-            return "user/search";
+            return "search/search";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/history")
+    public String searchHistory(Model model, HttpSession session) {
+        if(authenticationService.isLoggedIn(session)){
+            List<SearchHistory> searchHistories = searchService.findPopularSearchHistory();
+            model.addAttribute("searchHistories", searchHistories);
+            return "search/history";
+        } else {
+            return "redirect:/";
+        }
+    }
+
+    @GetMapping("/delete")
+    public String deleteAll(HttpSession session){
+        if(authenticationService.isLoggedIn(session)){
+            searchService.deleteAll();
+            return "search/history";
         } else {
             return "redirect:/";
         }

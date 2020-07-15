@@ -9,17 +9,16 @@
 <body>
 
 <ul class="topnav">
-    <li><a class="active" href="/">DASHBOARD</a></li>
-    <li><a href="/user/search">SEARCH GITHUB</a></li>
-    <li><a href="/">SEARCH HISTORY</a></li>
-    <li><a href="/">POPULAR SEARCH</a></li>
+    <li><a href="/">DASHBOARD</a></li>
+    <li><a class="active" href="/github/search">SEARCH GITHUB</a></li>
+    <li><a href="/github/history">SEARCH HISTORY</a></li>
     <li><a href="/logout">LOGOUT</a></li>
 </ul>
 
 <div class="content">
 
     <h2>Search By Git User Name</h2>
-    <form th:action="@{/user/search}" th:method="POST" modelAttribute="username">
+    <form th:action="@{/github/search}" th:method="POST" modelAttribute="username">
         <input type="text" name="username" id="cls" placeholder="Search By Github User Name"/>
         <input type="submit" id="btn" value="SEARCH"/>
     </form>
@@ -39,7 +38,7 @@
             <td><img th:src="${user.avatar_url}" th:height="150px" th:width="150px"/></td>
             <td th:text="${user.login}"></td>
             <td th:text="${user.name}"></td>
-            <td th:text="${user.followers}"></td>
+            <td th:if="${user.followers}"></td>
             <td th:text="${user.following}"></td>
         </tr>
         </tbody>

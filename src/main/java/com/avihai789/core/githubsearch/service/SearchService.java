@@ -16,6 +16,7 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -64,4 +65,11 @@ public class SearchService {
         return results;
     }
 
+    public List<SearchHistory> findPopularSearchHistory() {
+        return historyRepo.findByOrderBySearchCountDesc();
+    }
+
+    public void deleteAll() {
+        historyRepo.deleteAll();
+    }
 }

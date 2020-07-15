@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Github Library</title>
+    <link rel="stylesheet" th:href="@{/css/menu.css}"/>
+    <link rel="stylesheet" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+<ul class="topnav">
+    <li><a href="/">DASHBOARD</a></li>
+    <li><a href="/github/search">SEARCH GITHUB</a></li>
+    <li><a class="active" href="/github/history">SEARCH HISTORY</a></li>
+    <li><a href="/github/delete">DELETE ALL</a></li>
+    <li><a href="/logout">LOGOUT</a></li>
+</ul>
+
+<div class="content">
+    <h3>POPULAR SEARCH HISTORY</h3>
+    <table width="100%" id="pop-search">
+        <tr>
+            <th>Serial</th>
+            <th>User Name</th>
+            <th>Full Name</th>
+            <th>Search Count</th>
+            <th>Last Searched on</th>
+        </tr>
+        <tr th:each="history,iterationStatus : ${searchHistories}">
+            <td th:text="${iterationStatus.count}">1</td>
+            <td><a target="_blank" th:href="${history.gitUrl}" th:text="${history.userName}"></a></td>
+            <td th:text="${history.fullName}"></td>
+            <td th:text="${history.searchCount}"></td>
+            <td th:text="${#temporals.format(history.updatedAt, 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+    </table>
+
+</div>
+</body>
+</html>
