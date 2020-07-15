@@ -16,7 +16,9 @@ import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Slf4j
 @Service
@@ -66,7 +68,14 @@ public class SearchService {
     }
 
     public List<SearchHistory> findPopularSearchHistory() {
-        return historyRepo.findByOrderBySearchCountDesc();
+        List<SearchHistory> histories = new ArrayList<>();
+        AtomicLong count= new AtomicLong();
+        historyRepo.findByOrderBySearchCountDesc().stream().forEach(searchHistory -> {
+            if(count.getAndIncrement()<10){
+                histories.add(searchHistory);
+            }
+        });
+        return histories;
     }
 
     public void deleteAll() {

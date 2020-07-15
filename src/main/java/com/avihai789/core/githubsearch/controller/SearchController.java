@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
-@Slf4j
 @Controller
 @RequestMapping("/github")
 public class SearchController {
@@ -39,7 +38,6 @@ public class SearchController {
     public String findByUserName(@ModelAttribute("username") String userName, Model model, HttpSession session) {
         if (authenticationService.isLoggedIn(session)){
             Search gitUser = searchService.findByUserName(userName);
-            log.info("Git User: "+ gitUser);
             model.addAttribute("gitUser", gitUser);
             if(gitUser.getLogin()==null){
                 model.addAttribute("errorMessage", "NoData");

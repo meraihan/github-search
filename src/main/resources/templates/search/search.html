@@ -38,7 +38,7 @@
             <td><img th:src="${user.avatar_url}" th:height="150px" th:width="150px"/></td>
             <td th:text="${user.login}"></td>
             <td th:text="${user.name}"></td>
-            <td th:if="${user.followers}"></td>
+            <td th:text="${user.followers}"></td>
             <td th:text="${user.following}"></td>
         </tr>
         </tbody>
