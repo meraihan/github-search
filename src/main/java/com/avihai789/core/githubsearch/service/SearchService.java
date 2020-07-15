@@ -1,7 +1,8 @@
 package com.avihai789.core.githubsearch.service;
 
 import com.avihai789.core.githubsearch.model.Search;
-import com.avihai789.core.githubsearch.model.SearchResult;
+import com.avihai789.core.githubsearch.model.SearchHistory;
+import com.avihai789.core.githubsearch.repository.SearchHistoryRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,14 +15,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
-public class GitService {
+public class SearchService {
 
     @Value("${github.base.api.url}")
     private String url;
     @Autowired
     private RestTemplateBuilder restTemplateBuilder;
+    @Autowired
+    private SearchHistoryRepo historyRepo;
 
     public Search findByUserName(String userName) {
         RestTemplate restTemplate = restTemplateBuilder.build();
@@ -34,6 +39,23 @@ public class GitService {
             ResponseEntity<Search> responseEntity = restTemplate.exchange(url, HttpMethod.GET, entity, Search.class);
             log.info("Status: " + responseEntity.getStatusCode());
             results = responseEntity.getBody();
+            SearchHistory searchHistory = historyRepo.findByUserName(userName);
+            SearchHistory history = new SearchHistory();
+            if(searchHistory==null){
+                history.setUserName(userName);
+                history.setFullName(results.getName());
+                history.setGitUrl(results.getHtml_url());
+                history.setSearchCount(1);
+                history.setCreatedAt(LocalDateTime.now());
+            } else {
+                history.setId(searchHistory.getId());
+                history.setUserName(searchHistory.getUserName());
+                history.setFullName(searchHistory.getFullName());
+                history.setGitUrl(searchHistory.getGitUrl());
+                history.setSearchCount(searchHistory.getSearchCount()+1);
+                history.setUpdatedAt(LocalDateTime.now());
+            }
+            historyRepo.save(history);
             return results;
         } catch (HttpStatusCodeException exception) {
             int statusCode = exception.getStatusCode().value();

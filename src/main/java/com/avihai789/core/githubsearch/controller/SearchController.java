@@ -2,7 +2,7 @@ package com.avihai789.core.githubsearch.controller;
 
 import com.avihai789.core.githubsearch.model.Search;
 import com.avihai789.core.githubsearch.service.AuthenticationService;
-import com.avihai789.core.githubsearch.service.GitService;
+import com.avihai789.core.githubsearch.service.SearchService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,10 +17,10 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 @Controller
 @RequestMapping("/user")
-public class GitController {
+public class SearchController {
 
     @Autowired
-    GitService gitService;
+    SearchService searchService;
     @Autowired
     AuthenticationService authenticationService;
 
@@ -35,9 +35,12 @@ public class GitController {
     @PostMapping("/search")
     public String findByUserName(@ModelAttribute("username") String userName, Model model, HttpSession session) {
         if (authenticationService.isLoggedIn(session)){
-            Search gitUser = gitService.findByUserName(userName);
+            Search gitUser = searchService.findByUserName(userName);
             log.info("Git User: "+ gitUser);
             model.addAttribute("gitUser", gitUser);
+            if(gitUser.getLogin()==null){
+                model.addAttribute("errorMessage", "NoData");
+            }
             return "user/search";
         } else {
             return "redirect:/";

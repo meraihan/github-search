@@ -16,10 +16,12 @@ public class SearchHistory {
     private String userName;
     @Column(name = "full_name")
     private String fullName;
-    @Column(name = "search_count", nullable = false)
+    @Column(name = "url")
+    private String gitUrl;
+    @Column(name = "search_count")
     private Integer searchCount;
-    @Column(name = "created_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
-    @Column(name = "updated_at", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "updated_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
 }
