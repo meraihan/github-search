@@ -1,6 +1,6 @@
 package com.avihai789.core.githubsearch.controller;
 
-import com.avihai789.core.githubsearch.model.UserDto;
+import com.avihai789.core.githubsearch.model.dto.User;
 import com.avihai789.core.githubsearch.service.AuthenticationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String postLogin(@ModelAttribute("user") UserDto user, Model model, HttpSession session) {
+    public String postLogin(@ModelAttribute("user") User user, Model model, HttpSession session) {
         if (user != null && authenticationService.loadUserByUsername(user.getUsername(), user.getPassword())) {
             session.setAttribute("user", user);
             return "redirect:/";

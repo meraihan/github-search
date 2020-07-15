@@ -1,11 +1,9 @@
 package com.avihai789.core.githubsearch.controller;
 
-import com.avihai789.core.githubsearch.model.Search;
-import com.avihai789.core.githubsearch.model.SearchHistory;
+import com.avihai789.core.githubsearch.model.dto.Search;
+import com.avihai789.core.githubsearch.model.tables.SearchHistory;
 import com.avihai789.core.githubsearch.service.AuthenticationService;
 import com.avihai789.core.githubsearch.service.SearchService;
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

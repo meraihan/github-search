@@ -1,4 +1,4 @@
-package com.avihai789.core.githubsearch.model;
+package com.avihai789.core.githubsearch.model.dto;
 
 import lombok.Data;
 

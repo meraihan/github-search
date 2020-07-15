@@ -1,7 +1,7 @@
 package com.avihai789.core.githubsearch.service;
 
-import com.avihai789.core.githubsearch.model.Search;
-import com.avihai789.core.githubsearch.model.SearchHistory;
+import com.avihai789.core.githubsearch.model.dto.Search;
+import com.avihai789.core.githubsearch.model.tables.SearchHistory;
 import com.avihai789.core.githubsearch.repository.SearchHistoryRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
